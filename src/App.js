@@ -3,7 +3,7 @@ import React from 'react'
 import './App.css'
 
 import { BookCase } from './BookCase'
-import { Library } from './Library'
+import { BookSearch } from './BookSearch'
 
 class BooksApp extends React.Component {
   state = {
@@ -16,13 +16,13 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
-  onExitLibrary = () => {
+  onExitSearch = () => {
     this.setState((prevState) => ({
       showSearchPage: false
     }))
   }
 
-  onEnterLibrary = () => {
+  onEnterSearch = () => {
     this.setState((prevState) => ({
       showSearchPage: true
     }))
@@ -32,12 +32,12 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Library onExitLibrary= { this.onExitLibrary }/>
+          <BookSearch onExitSearch= { this.onExitSearch }/>
         ) : (
           <BookCase />
         )}
         <div className="open-search">
-          <button onClick={() => { this.onEnterLibrary() } }>Add a book</button>
+          <button onClick={() => { this.onEnterSearch() } }>Add a book</button>
         </div>
       </div>
     )

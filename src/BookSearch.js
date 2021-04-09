@@ -1,11 +1,11 @@
 import React from 'react'
 
-export class Library extends React.Component {
+export class BookSearch extends React.Component {
   render() {
     return (
         <div className="search-books">
           <div className="search-books-bar">
-            <button className="close-search" onClick={() => { this.props.onExitLibrary() } }>Close</button>
+            <button className="close-search" onClick={() => { this.props.onExitSearch() } }>Close</button>
             <div className="search-books-input-wrapper">
               {/*
                 NOTES: The search from BooksAPI is limited to a particular set of search terms.
