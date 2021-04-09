@@ -5,6 +5,8 @@ import './App.css'
 import { BookCase } from './BookCase'
 import { BookSearch } from './BookSearch'
 
+import { Route, Link } from 'react-router-dom'
+
 class BooksApp extends React.Component {
   state = {
     /**
@@ -31,14 +33,23 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <BookSearch onExitSearch= { this.onExitSearch }/>
-        ) : (
-          <BookCase />
-        )}
-        <div className="open-search">
-          <button onClick={() => { this.onEnterSearch() } }>Add a book</button>
-        </div>
+        <Route exact path='/' render={()=>(
+          <div>
+            <BookCase />
+            <div className="open-search">
+            <Link to="/search">
+              <button>Add a book</button>
+            </Link>
+            </div>
+          </div>
+        )} />
+        <Route path='/search' render={({history}) =>(
+          <BookSearch
+            onExitSearch={() => {
+              history.push('/');
+            }}
+          />
+        )} />
       </div>
     )
   }
