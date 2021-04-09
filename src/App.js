@@ -1,5 +1,5 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 import { BookCase } from './BookCase'
@@ -9,7 +9,7 @@ import { Route, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    // TODO: Add books
+    books: []
   }
 
   render() {
@@ -34,6 +34,11 @@ class BooksApp extends React.Component {
         )} />
       </div>
     )
+  }
+
+  componentDidMount() {
+    const books = BooksAPI.getAll();
+    console.log(books);
   }
 }
 
