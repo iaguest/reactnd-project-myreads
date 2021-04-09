@@ -5,7 +5,7 @@ export class Library extends React.Component {
     return (
         <div className="search-books">
           <div className="search-books-bar">
-            <button className="close-search" onClick={() => this.props.onExitLibrary() }>Close</button>
+            <button className="close-search" onClick={() => { this.props.onExitLibrary() } }>Close</button>
             <div className="search-books-input-wrapper">
               {/*
                 NOTES: The search from BooksAPI is limited to a particular set of search terms.
