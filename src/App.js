@@ -13,6 +13,13 @@ class BooksApp extends React.Component {
     shelfTypes: new Set(),
   }
 
+  onChangeShelf = (id, newShelf) => {
+    this.setState((prevState) => ({
+      books: prevState.books.map(
+        (book) => (book.id === id) ? {...book, shelf: newShelf} : book)
+    }))
+  }
+
   render() {
     return (
       <div className="app">
@@ -21,6 +28,7 @@ class BooksApp extends React.Component {
             <BookCase
               books = { this.state.books }
               shelfTypes = { this.state.shelfTypes }
+              onChangeShelf = { this.onChangeShelf }
             />
             <div className="open-search">
             <Link to="/search">
