@@ -1,7 +1,17 @@
 import React from 'react'
 
+import Book from './Book'
+
 export class BookSearch extends React.Component {
+
+  state = {
+    query: '',
+  }
+
   render() {
+
+    const { books } = this.props
+
     return (
         <div className="search-books">
           <div className="search-books-bar">
@@ -20,7 +30,11 @@ export class BookSearch extends React.Component {
             </div>
           </div>
           <div className="search-books-results">
-            <ol className="books-grid"></ol>
+            <ol className="books-grid">
+              { books.map((book) => {
+                  return <li key={book.id}><Book book={book} onChangeShelf = { ()=>{} }/></li>
+              })}
+            </ol>
           </div>
         </div>
     );
