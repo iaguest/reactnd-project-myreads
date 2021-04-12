@@ -14,6 +14,7 @@ export class BookCase extends React.Component {
           <div>
             { Array.from(this.props.shelfTypes).map((shelfType) => {
               return <BookShelf
+                        key={shelfType}
                         name={ camelCaseToTitleCase(shelfType) }
                         books={ this.props.books.filter((book) => book.shelf === shelfType) }
                         onChangeShelf = { this.props.onChangeShelf } />

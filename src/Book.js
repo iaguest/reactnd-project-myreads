@@ -22,12 +22,11 @@ function Book(props) {
         </div>
       </div>
       <div className="book-title">{props.book.title}</div>
-      {props.book.authors.map((name => {
-        return (
-          <div className="book-authors">{`${name}`}</div>
-        );
-      }))}
-
+        {props.book.authors.map((name => {
+          return (
+            <div key={name} className="book-authors">{`${name}`}</div>
+          );
+        }))}
     </div>
   );
 }
