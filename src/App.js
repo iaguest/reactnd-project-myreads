@@ -9,7 +9,8 @@ import { Route, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    shelfTypes: new Set(),
   }
 
   render() {
@@ -17,7 +18,10 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={()=>(
           <div>
-            <BookCase />
+            <BookCase
+              books = { this.state.books }
+              shelfTypes = { this.state.shelfTypes }
+            />
             <div className="open-search">
             <Link to="/search">
               <button>Add a book</button>
@@ -41,7 +45,8 @@ class BooksApp extends React.Component {
     console.log('In componentDidMount...')
     BooksAPI.getAll().then(books=>{
       this.setState((prevState)=>({
-        books: books
+        books: books,
+        shelfTypes: new Set(books.map((book) => { return book.shelf; }))
       }))
     });
   }

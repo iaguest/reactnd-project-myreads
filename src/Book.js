@@ -7,11 +7,12 @@ function Book(props) {
         <div
           className="book-cover"
           style={{
-            width: props.book.imageWidth, height: props.book.imageHeight, backgroundImage: `url(${props.book.imageUrl})`
+            // TODO: Review hard coded setting of width and height
+            width: 128, height: 190, backgroundImage: `url(${props.book.imageLinks.smallThumbnail})`
             }}>
         </div>
         <div className="book-shelf-changer">
-          <select>
+          <select value={props.book.shelf}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
