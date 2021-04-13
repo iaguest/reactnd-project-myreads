@@ -60,6 +60,17 @@ class BooksApp extends React.Component {
       }))
     });
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    prevState.books.forEach((prevBook, index) => {
+      let currentBook = this.state.books[index];
+      if (currentBook.shelf !== prevBook.shelf) {
+        BooksAPI.update(prevBook, currentBook.shelf);
+      }
+    });
+    
+  }
 }
 
 export default BooksApp
