@@ -1,7 +1,7 @@
 import React from 'react'
 
 import BookShelf from './BookShelf'
-import { camelCaseToTitleCase } from './utils'
+import { shelfTypes, shelfTypeLabel, isShelfTypeNone } from './ShelfTypeHelper'
 
 export class BookCase extends React.Component {
   render() {
@@ -12,10 +12,10 @@ export class BookCase extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            { Array.from(this.props.shelfTypes).map((shelfType) => {
+            { shelfTypes().filter(shelfType => !isShelfTypeNone(shelfType)).map((shelfType) => {
               return <BookShelf
                         key={shelfType}
-                        name={ camelCaseToTitleCase(shelfType) }
+                        name={ shelfTypeLabel(shelfType) }
                         books={ this.props.books.filter((book) => book.shelf === shelfType) }
                         onChangeShelf = { this.props.onChangeShelf } />
             })}

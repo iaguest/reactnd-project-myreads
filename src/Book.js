@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { shelfTypes, shelfTypeLabel } from './ShelfTypeHelper'
+
 function Book(props) {
   return (
     <div className="book">
@@ -14,10 +16,9 @@ function Book(props) {
         <div className="book-shelf-changer">
           <select value={props.book.shelf} onChange={(e) => props.onChangeShelf(props.book.id, e.target.value)}>
             <option value="move" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
+            { shelfTypes().map((shelfType) => {
+                return <option value={shelfType}>{shelfTypeLabel(shelfType)}</option>
+              }) }
           </select>
         </div>
       </div>

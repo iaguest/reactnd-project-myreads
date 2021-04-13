@@ -1,16 +1,16 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
+import { Route, Link } from 'react-router-dom'
+
 import './App.css'
 
 import { BookCase } from './BookCase'
 import { BookSearch } from './BookSearch'
 
-import { Route, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
     books: [],
-    shelfTypes: new Set(),
   }
 
   onChangeShelf = (id, newShelf) => {
@@ -28,7 +28,6 @@ class BooksApp extends React.Component {
           <div>
             <BookCase
               books = { this.state.books }
-              shelfTypes = { this.state.shelfTypes }
               onChangeShelf = { this.onChangeShelf }
             />
             <div className="open-search">
@@ -56,7 +55,6 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then(books=>{
       this.setState((prevState)=>({
         books: books,
-        shelfTypes: new Set(books.map((book) => { return book.shelf; }))
       }))
     });
   }
