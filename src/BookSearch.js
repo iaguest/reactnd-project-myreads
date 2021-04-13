@@ -3,6 +3,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 
 import Book from './Book'
+import { noneString } from './ShelfTypeHelper'
 
 export class BookSearch extends React.Component {
 
@@ -23,7 +24,7 @@ export class BookSearch extends React.Component {
       BooksAPI.search(this.state.query)
         .then(books => {
             this.setState((prevState)=>({
-              queryResults: books,
+              queryResults: books.map((book) => ({...book, shelf: noneString})),
           }))})
         .catch(e => {
           this.setState((prevState)=>({

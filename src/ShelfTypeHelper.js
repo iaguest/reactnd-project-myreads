@@ -1,7 +1,7 @@
 const currentlyReadingString = "currentlyReading";
 const wantToReadString = "wantToRead";
 const readString = "read";
-const noneString = "none";
+export const noneString = "none";
 
 export function isShelfTypeNone(shelfType) {
   return shelfType === noneString;
