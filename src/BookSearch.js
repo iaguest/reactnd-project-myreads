@@ -1,16 +1,39 @@
 import React from 'react'
 
+import * as BooksAPI from './BooksAPI'
+
 import Book from './Book'
 
 export class BookSearch extends React.Component {
 
   state = {
     query: '',
+    queryResults: []
+  }
+
+  updateQuery = (query) => {
+    this.setState(() => ({
+      query: query.trim()
+    }))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('In BookSearch:componentDidUpdate');
+    if (prevState.query !== this.state.query) {
+      BooksAPI.search(this.state.query)
+        .then(books => {
+            this.setState((prevState)=>({
+              queryResults: books,
+          }))})
+        .catch(e => {
+          this.setState((prevState)=>({
+            queryResults: []
+          }))
+        });
+    }
   }
 
   render() {
-
-    const { books } = this.props
 
     return (
         <div className="search-books">
@@ -25,15 +48,15 @@ export class BookSearch extends React.Component {
                 However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                 you don't find a specific author or title. Every search is limited by search terms.
               */}
-              <input type="text" placeholder="Search by title or author"/>
+              <input type="text" placeholder="Search by title or author" onChange={ (event) => this.updateQuery(event.target.value) }/>
 
             </div>
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              { books.map((book) => {
-                  return <li key={book.id}><Book book={book} onChangeShelf = { this.props.onChangeShelf }/></li>
-              })}
+              { (this.state.queryResults && this.state.queryResults.length > 0) && (
+                  this.state.queryResults.map((book) => {
+                    return <li key={book.id}><Book book={book} onChangeShelf = { this.props.onChangeShelf }/></li>}))}
             </ol>
           </div>
         </div>

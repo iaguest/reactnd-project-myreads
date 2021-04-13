@@ -39,7 +39,6 @@ class BooksApp extends React.Component {
         )} />
         <Route path='/search' render={({history}) =>(
           <BookSearch
-            books = { this.state.books }
             onChangeShelf = { this.onChangeShelf }
             onExitSearch={() => {
               history.push('/');
@@ -51,7 +50,7 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    console.log('In componentDidMount...')
+    console.log('In App:componentDidMount...')
     BooksAPI.getAll().then(books=>{
       this.setState((prevState)=>({
         books: books,
@@ -60,14 +59,14 @@ class BooksApp extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-
+    // Update first changed component
     prevState.books.forEach((prevBook, index) => {
       let currentBook = this.state.books[index];
       if (currentBook.shelf !== prevBook.shelf) {
         BooksAPI.update(prevBook, currentBook.shelf);
+        return;
       }
     });
-    
   }
 }
 

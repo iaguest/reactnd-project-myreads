@@ -9,25 +9,25 @@ function Book(props) {
         <div
           className="book-cover"
           style={{
-            // TODO: Review hard coded setting of width and height
-            width: 128, height: 190, backgroundImage: `url(${props.book.imageLinks.smallThumbnail})`
+              // TODO: Review hard coded setting of width and height
+              width: 128,
+              height: 190,
+              backgroundImage: `url(${(props.book.imageLinks) ? props.book.imageLinks.smallThumbnail : '#'})`
             }}>
         </div>
         <div className="book-shelf-changer">
           <select value={props.book.shelf} onChange={(e) => props.onChangeShelf(props.book.id, e.target.value)}>
             <option value="move" disabled>Move to...</option>
             { shelfTypes().map((shelfType) => {
-                return <option value={shelfType}>{shelfTypeLabel(shelfType)}</option>
-              }) }
+                return <option key={shelfType} value={shelfType}>{shelfTypeLabel(shelfType)}</option>})}
           </select>
         </div>
       </div>
       <div className="book-title">{props.book.title}</div>
-        {props.book.authors.map((name => {
-          return (
-            <div key={name} className="book-authors">{`${name}`}</div>
-          );
-        }))}
+      {(props.book.authors) && (
+          props.book.authors.map(name => {
+            return <div key={name} className="book-authors">{`${name}`}</div>; }
+        ))}
     </div>
   );
 }
