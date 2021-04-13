@@ -32,7 +32,7 @@ export class BookSearch extends React.Component {
           <div className="search-books-results">
             <ol className="books-grid">
               { books.map((book) => {
-                  return <li key={book.id}><Book book={book} onChangeShelf = { ()=>{} }/></li>
+                  return <li key={book.id}><Book book={book} onChangeShelf = { this.props.onChangeShelf }/></li>
               })}
             </ol>
           </div>
