@@ -39,6 +39,7 @@ class BooksApp extends React.Component {
         )} />
         <Route path='/search' render={({history}) =>(
           <BookSearch
+            currentBooks = { this.state.books }
             onChangeShelf = { this.onChangeShelf }
             onExitSearch={() => {
               history.push('/');

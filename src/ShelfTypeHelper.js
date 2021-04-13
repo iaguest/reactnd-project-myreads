@@ -1,14 +1,9 @@
 const currentlyReadingString = "currentlyReading";
 const wantToReadString = "wantToRead";
 const readString = "read";
-export const noneString = "none";
-
-export function isShelfTypeNone(shelfType) {
-  return shelfType === noneString;
-}
 
 export function shelfTypes() {
-  return [currentlyReadingString, wantToReadString, readString, noneString]
+  return [currentlyReadingString, wantToReadString, readString]
 }
 
 export function shelfTypeLabel(shelfType) {
@@ -19,8 +14,6 @@ export function shelfTypeLabel(shelfType) {
       return "Want To Read";
     case readString:
       return "Read";
-    case noneString:
-      return "None";
     default:
       throw RangeError("Unhandled shelfType")
   }

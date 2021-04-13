@@ -3,7 +3,6 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 
 import Book from './Book'
-import { noneString } from './ShelfTypeHelper'
 
 export class BookSearch extends React.Component {
 
@@ -12,10 +11,21 @@ export class BookSearch extends React.Component {
     queryResults: []
   }
 
-  updateQuery = (query) => {
+  updateQuery = query => {
     this.setState(() => ({
       query: query.trim()
     }))
+  }
+
+  searchResultsUpdatedForCurrentBooksState = (searchResults) => {
+    const bookIdToBookMap = new Map(searchResults.map(book => ([book.id, book])));
+    this.props.currentBooks.forEach(currentBook => {
+      const book = bookIdToBookMap.get(currentBook.id);
+      if (book !== undefined) {
+        book.shelf = currentBook.shelf;
+      }
+    });
+    return Array.from(bookIdToBookMap.values());
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -24,11 +34,11 @@ export class BookSearch extends React.Component {
       BooksAPI.search(this.state.query)
         .then(books => {
             this.setState((prevState)=>({
-              queryResults: books.map((book) => ({...book, shelf: noneString})),
+              queryResults: this.searchResultsUpdatedForCurrentBooksState(books)
           }))})
         .catch(e => {
-          this.setState((prevState)=>({
-            queryResults: []
+            this.setState((prevState)=>({
+              queryResults: []
           }))
         });
     }

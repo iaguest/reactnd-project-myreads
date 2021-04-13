@@ -3,6 +3,7 @@ import React from 'react'
 import { shelfTypes, shelfTypeLabel } from './ShelfTypeHelper'
 
 function Book(props) {
+  let defaultShelfValue = "none";
   return (
     <div className="book">
       <div className="book-top">
@@ -16,10 +17,13 @@ function Book(props) {
             }}>
         </div>
         <div className="book-shelf-changer">
-          <select value={props.book.shelf} onChange={(e) => props.onChangeShelf(props.book.id, e.target.value)}>
-            <option value="move" disabled>Move to...</option>
-            { shelfTypes().map((shelfType) => {
-                return <option key={shelfType} value={shelfType}>{shelfTypeLabel(shelfType)}</option>})}
+          <select
+            value={(props.book.shelf) ? (props.book.shelf) : defaultShelfValue}
+            onChange={(e) => props.onChangeShelf(props.book.id, e.target.value)}>
+              <option value="move" disabled>Move to...</option>
+              { shelfTypes().map((shelfType) => {
+                  return <option key={shelfType} value={shelfType}>{shelfTypeLabel(shelfType)}</option>})}
+              <option value={defaultShelfValue}>None</option>
           </select>
         </div>
       </div>

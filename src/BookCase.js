@@ -1,7 +1,7 @@
 import React from 'react'
 
 import BookShelf from './BookShelf'
-import { shelfTypes, shelfTypeLabel, isShelfTypeNone } from './ShelfTypeHelper'
+import { shelfTypes, shelfTypeLabel } from './ShelfTypeHelper'
 
 export class BookCase extends React.Component {
   render() {
@@ -12,7 +12,7 @@ export class BookCase extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            { shelfTypes().filter(shelfType => !isShelfTypeNone(shelfType)).map((shelfType) => {
+            { shelfTypes().map((shelfType) => {
               return <BookShelf
                         key={shelfType}
                         name={ shelfTypeLabel(shelfType) }
