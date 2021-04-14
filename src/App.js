@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
     books: [],
   }
 
-  // Modifies existing an book or adds a new one if it's not in the current list
+  // Modifies an existing book or adds a new one if it's not in the current list
   onChangeShelf = (book, newShelf, isExistingBook=true) => {
     console.log(
       `In BooksApp:onChangeShelf for book title: ${book.title}, newShelf: ${newShelf}, isNewBook: ${isExistingBook}}...`)
