@@ -14,11 +14,11 @@ class BooksApp extends React.Component {
   }
 
   onChangeShelf = (id, newShelf) => {
+    console.log("In BooksApp:onChangeShelf...")
     this.setState((prevState) => ({
       books: prevState.books.map(
-        // TODO: Address potential scaling issue O(N)
         (book) => (book.id === id) ? {...book, shelf: newShelf} : book)
-    }))
+    }));
   }
 
   render() {
