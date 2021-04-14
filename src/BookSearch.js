@@ -6,9 +6,11 @@ import Book from './Book'
 
 export class BookSearch extends React.Component {
 
+  defaultQueryResult = [];
+
   state = {
     query: '',
-    queryResults: []
+    queryResults: this.defaultQueryResult
   }
 
   updateQuery = query => {
@@ -17,7 +19,7 @@ export class BookSearch extends React.Component {
     }))
   }
 
-  searchResultsUpdatedForCurrentBooksState = (searchResults) => {
+  queryResultsUpdatedForCurrentBooksState = (searchResults) => {
     const bookIdToBookMap = new Map(searchResults.map(book => ([book.id, book])));
     this.props.currentBooks.forEach(currentBook => {
       const book = bookIdToBookMap.get(currentBook.id);
@@ -34,11 +36,13 @@ export class BookSearch extends React.Component {
       BooksAPI.search(this.state.query)
         .then(books => {
             this.setState((prevState)=>({
-              queryResults: this.searchResultsUpdatedForCurrentBooksState(books)
+              queryResults: (books && books.length > 0)
+                             ? this.queryResultsUpdatedForCurrentBooksState(books)
+                             : this.defaultQueryResult
           }))})
         .catch(e => {
             this.setState((prevState)=>({
-              queryResults: []
+              queryResults: this.defaultQueryResult
           }))
         });
     }
