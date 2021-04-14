@@ -13,11 +13,11 @@ class BooksApp extends React.Component {
     books: [],
   }
 
-  onChangeShelf = (id, newShelf) => {
+  onChangeShelf = (changedBook, newShelf) => {
     console.log("In BooksApp:onChangeShelf...")
     this.setState((prevState) => ({
       books: prevState.books.map(
-        (book) => (book.id === id) ? {...book, shelf: newShelf} : book)
+        (book) => (book.id === changedBook.id) ? {...book, shelf: newShelf} : book)
     }));
   }
 

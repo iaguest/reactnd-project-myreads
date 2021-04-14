@@ -19,7 +19,7 @@ function Book(props) {
         <div className="book-shelf-changer">
           <select
             value={(props.book.shelf) ? (props.book.shelf) : defaultShelfValue}
-            onChange={(e) => props.onChangeShelf(props.book.id, e.target.value)}>
+            onChange={(e) => props.onChangeShelf(props.book, e.target.value)}>
               <option value="move" disabled>Move to...</option>
               { shelfTypes().map((shelfType) => {
                   return <option key={shelfType} value={shelfType}>{shelfTypeLabel(shelfType)}</option>})}
