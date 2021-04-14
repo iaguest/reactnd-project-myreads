@@ -15,12 +15,30 @@ class BooksApp extends React.Component {
 
   // Modifies existing an book or adds a new one if it's not in the current list
   onChangeShelf = (book, newShelf, isExistingBook=true) => {
-    console.log(`In BooksApp:onChangeShelf for book title: ${book.title}, newShelf: ${newShelf}, isNewBook: ${isExistingBook}}...`)
+    console.log(
+      `In BooksApp:onChangeShelf for book title: ${book.title}, newShelf: ${newShelf}, isNewBook: ${isExistingBook}}...`)
     this.setState((prevState) => ({
       books: (isExistingBook)
              ? prevState.books.map((item) => (item.id === book.id) ? {...item, shelf: newShelf} : item)
              : [...prevState.books, {...book, shelf: newShelf} ]
     }));
+  }
+
+  handleUpdateForNewBook(numCurrentBooks) {
+    console.log("In BookApp:handleUpdateForNewBook...")
+    const newBook = this.state.books[numCurrentBooks - 1]
+    BooksAPI.update(newBook, newBook.shelf)
+  }
+
+  handleUpdateForModifiedBook(prevState) {
+    console.log("In BookApp:handleUpdateForModifiedBook...")
+    prevState.books.forEach((prevBook, index) => {
+      let currentBook = this.state.books[index]
+      if (currentBook.shelf !== prevBook.shelf) {
+        BooksAPI.update(prevBook, currentBook.shelf)
+        return
+      }
+    })
   }
 
   render() {
@@ -44,9 +62,7 @@ class BooksApp extends React.Component {
           <BookSearch
             getCurrentBooks = { () => this.state.books }
             onChangeShelf = { this.onChangeShelf }
-            onExitSearch={() => {
-              history.push('/');
-            }}
+            onExitSearch={ () => { history.push('/'); }}
           />
         )} />
       </div>
@@ -69,20 +85,12 @@ class BooksApp extends React.Component {
     const numCurrentBooks = this.state.books.length;
 
     if (numPrevBooks === numCurrentBooks) {
-      console.log("Handle modified book by calling update for first matching item id");
-      prevState.books.forEach((prevBook, index) => {
-        let currentBook = this.state.books[index];
-        if (currentBook.shelf !== prevBook.shelf) {
-          BooksAPI.update(prevBook, currentBook.shelf);
-          return;
-        }
-      });
+      this.handleUpdateForModifiedBook(prevState)
     } else if (numPrevBooks === numCurrentBooks - 1) {
-      console.log("Handle new book by calling update for last current book item");
-      const newBook = this.state.books[numCurrentBooks - 1];
-      BooksAPI.update(newBook, newBook.shelf);
+      this.handleUpdateForNewBook(numCurrentBooks)
     }
   }
+
 }
 
 export default BooksApp
