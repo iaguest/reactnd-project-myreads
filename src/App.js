@@ -60,6 +60,7 @@ class BooksApp extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('In App:componentDidUpdate...')
     // Update first changed component
     prevState.books.forEach((prevBook, index) => {
       let currentBook = this.state.books[index];

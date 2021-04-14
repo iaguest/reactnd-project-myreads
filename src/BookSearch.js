@@ -19,6 +19,15 @@ export class BookSearch extends React.Component {
     }))
   }
 
+  onChangeShelf = (id, newShelf) => {
+    console.log("In BooksSearch:onChangeShelf...")
+    this.setState((prevState) => ({
+      queryResults: prevState.queryResults.map(
+        (book) => (book.id === id) ? {...book, shelf: newShelf} : book)
+    }))
+    this.props.onChangeShelf(id, newShelf);
+  }
+
   queryResultsUpdatedForCurrentBooksState = (searchResults) => {
     const bookIdToBookMap = new Map(searchResults.map(book => ([book.id, book])));
     this.props.currentBooks.forEach(currentBook => {
@@ -28,34 +37,6 @@ export class BookSearch extends React.Component {
       }
     });
     return Array.from(bookIdToBookMap.values());
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('In BookSearch:componentDidUpdate');
-    if (prevState.query !== this.state.query) {
-      console.log('Handling BookSearch query change...')
-      BooksAPI.search(this.state.query)
-        .then(books => {
-            this.setState((prevState)=>({
-              queryResults: (books && books.length > 0)
-                             ? this.queryResultsUpdatedForCurrentBooksState(books)
-                             : this.defaultQueryResult
-          }))})
-        .catch(e => {
-            this.setState((prevState)=>({
-              queryResults: this.defaultQueryResult
-          }))
-        });
-    }
-  }
-
-  onChangeShelf = (id, newShelf) => {
-    console.log("In BooksSearch:onChangeShelf...")
-    this.setState((prevState) => ({
-      queryResults: prevState.queryResults.map(
-        (book) => (book.id === id) ? {...book, shelf: newShelf} : book)
-    }))
-    this.props.onChangeShelf(id, newShelf);
   }
 
   render() {
@@ -88,5 +69,24 @@ export class BookSearch extends React.Component {
           </div>
         </div>
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('In BookSearch:componentDidUpdate');
+    if (prevState.query !== this.state.query) {
+      console.log('Handling BookSearch query change...')
+      BooksAPI.search(this.state.query)
+        .then(books => {
+            this.setState((prevState)=>({
+              queryResults: (books && books.length > 0)
+                             ? this.queryResultsUpdatedForCurrentBooksState(books)
+                             : this.defaultQueryResult
+          }))})
+        .catch(e => {
+            this.setState((prevState)=>({
+              queryResults: this.defaultQueryResult
+          }))
+        });
+    }
   }
 }
