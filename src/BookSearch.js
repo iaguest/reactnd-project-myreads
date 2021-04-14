@@ -19,18 +19,21 @@ export class BookSearch extends React.Component {
     }))
   }
 
-  onChangeShelf = (changedBook, newShelf) => {
+  onChangeShelf = (book, newShelf) => {
     console.log("In BooksSearch:onChangeShelf...")
+    // Update queryResults...
     this.setState((prevState) => ({
       queryResults: prevState.queryResults.map(
-        (book) => (book.id === changedBook.id) ? {...book, shelf: newShelf} : book)
+        (item) => (item.id === book.id) ? {...item, shelf: newShelf} : item)
     }))
-    this.props.onChangeShelf(changedBook, newShelf);
+    // Update currentBooks...
+    const isExistingBook = this.props.getCurrentBooks().findIndex((item) => item.id === book.id) !== -1;
+    this.props.onChangeShelf(book, newShelf, isExistingBook);
   }
 
   queryResultsUpdatedForCurrentBooksState = (searchResults) => {
     const bookIdToBookMap = new Map(searchResults.map(book => ([book.id, book])));
-    this.props.currentBooks.forEach(currentBook => {
+    this.props.getCurrentBooks().forEach(currentBook => {
       const book = bookIdToBookMap.get(currentBook.id);
       if (book !== undefined) {
         book.shelf = currentBook.shelf;
