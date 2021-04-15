@@ -16,7 +16,7 @@ class BooksApp extends React.Component {
   // Modifies an existing book or adds a new one if it's not in the current list
   onChangeShelf = (book, newShelf, isExistingBook=true) => {
     console.log(
-      `In BooksApp:onChangeShelf for book title: ${book.title}, newShelf: ${newShelf}, isNewBook: ${isExistingBook}}...`)
+      `In BooksApp:onChangeShelf for book title: ${book.title}, newShelf: ${newShelf}, isNewBook: ${isExistingBook}}...`);
     this.setState((prevState) => ({
       books: (isExistingBook)
              ? prevState.books.map((item) => (item.id === book.id) ? {...item, shelf: newShelf} : item)
@@ -24,25 +24,24 @@ class BooksApp extends React.Component {
     }));
   }
 
-  handleUpdateForNewBook(numCurrentBooks) {
-    console.log("In BookApp:handleUpdateForNewBook...")
-    const newBook = this.state.books[numCurrentBooks - 1]
-    BooksAPI.update(newBook, newBook.shelf)
+  handleUpdateForNewBook(newBook) {
+    console.log("In BookApp:handleUpdateForNewBook...");
+    BooksAPI.update(newBook, newBook.shelf);
   }
 
   handleUpdateForModifiedBook(prevState) {
-    console.log("In BookApp:handleUpdateForModifiedBook...")
+    console.log("In BookApp:handleUpdateForModifiedBook...");
     prevState.books.forEach((prevBook, index) => {
-      let currentBook = this.state.books[index]
+      let currentBook = this.state.books[index];
       if (currentBook.shelf !== prevBook.shelf) {
-        BooksAPI.update(prevBook, currentBook.shelf)
-        return
+        BooksAPI.update(prevBook, currentBook.shelf);
+        return;
       }
-    })
+    });
   }
 
   render() {
-    console.log("In BooksApp:render...")
+    console.log("In BooksApp:render...");
     return (
       <div className="app">
         <Route exact path='/' render={()=>(
@@ -66,31 +65,31 @@ class BooksApp extends React.Component {
           />
         )} />
       </div>
-    )
+    );
   }
 
   componentDidMount() {
-    console.log('In BooksApp:componentDidMount...')
+    console.log('In BooksApp:componentDidMount...');
     BooksAPI.getAll().then(books=>{
       this.setState((prevState)=>({
         books: books,
-      }))
+      }));
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('In BooksApp:componentDidUpdate...')
+    console.log('In BooksApp:componentDidUpdate...');
 
     const numPrevBooks = prevState.books.length;
     const numCurrentBooks = this.state.books.length;
 
     if (numPrevBooks === numCurrentBooks) {
-      this.handleUpdateForModifiedBook(prevState)
+      this.handleUpdateForModifiedBook(prevState);
     } else if (numPrevBooks === numCurrentBooks - 1) {
-      this.handleUpdateForNewBook(numCurrentBooks)
+      this.handleUpdateForNewBook(this.state.books[numCurrentBooks - 1]);
     }
   }
 
 }
 
-export default BooksApp
+export default BooksApp;

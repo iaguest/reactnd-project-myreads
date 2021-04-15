@@ -16,16 +16,16 @@ export class BookSearch extends React.Component {
   updateQuery = query => {
     this.setState(() => ({
       query: query.trim()
-    }))
+    }));
   }
 
   onChangeShelf = (book, newShelf) => {
-    console.log("In BooksSearch:onChangeShelf...")
+    console.log("In BooksSearch:onChangeShelf...");
     // Update queryResults...
     this.setState((prevState) => ({
       queryResults: prevState.queryResults.map(
         (item) => (item.id === book.id) ? {...item, shelf: newShelf} : item)
-    }))
+    }));
     // Update currentBooks...
     const isExistingBook = this.props.getCurrentBooks().findIndex((item) => item.id === book.id) !== -1;
     this.props.onChangeShelf(book, newShelf, isExistingBook);
@@ -66,7 +66,7 @@ export class BookSearch extends React.Component {
             <ol className="books-grid">
               { (this.state.queryResults && this.state.queryResults.length > 0) && (
                   this.state.queryResults.map((book) => {
-                    return <li key={book.id}><Book book={book} onChangeShelf = { this.onChangeShelf }/></li>}))}
+                    return <li key={book.id}><Book book={book} onChangeShelf = { this.onChangeShelf }/></li>; }))}
             </ol>
           </div>
         </div>
@@ -76,18 +76,18 @@ export class BookSearch extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     console.log('In BookSearch:componentDidUpdate');
     if (prevState.query !== this.state.query) {
-      console.log('Handling BookSearch query change...')
+      console.log('Handling BookSearch query change...');
       BooksAPI.search(this.state.query)
         .then(books => {
             this.setState((prevState)=>({
               queryResults: (books && books.length > 0)
                              ? this.queryResultsUpdatedForCurrentBooksState(books)
-                             : this.defaultQueryResult
-          }))})
+                             : this.defaultQueryResult}));
+        })
         .catch(e => {
             this.setState((prevState)=>({
               queryResults: this.defaultQueryResult
-          }))
+          }));
         });
     }
   }

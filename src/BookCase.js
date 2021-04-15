@@ -17,7 +17,7 @@ export class BookCase extends React.Component {
                         key={shelfType}
                         name={ shelfTypeLabel(shelfType) }
                         books={ this.props.books.filter((book) => book.shelf === shelfType) }
-                        onChangeShelf = { this.props.onChangeShelf } />
+                        onChangeShelf = { this.props.onChangeShelf } />;
             })}
           </div>
         </div>

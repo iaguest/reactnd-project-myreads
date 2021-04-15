@@ -3,7 +3,7 @@ const wantToReadString = "wantToRead";
 const readString = "read";
 
 export function shelfTypes() {
-  return [currentlyReadingString, wantToReadString, readString]
+  return [currentlyReadingString, wantToReadString, readString];
 }
 
 export function shelfTypeLabel(shelfType) {
