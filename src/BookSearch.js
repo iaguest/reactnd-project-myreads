@@ -1,4 +1,5 @@
 import React from 'react'
+import { debounce } from 'underscore'
 
 import * as BooksAPI from './BooksAPI'
 
@@ -42,6 +43,25 @@ export class BookSearch extends React.Component {
     return Array.from(bookIdToBookMap.values());
   }
 
+  doQuerySearch() {
+    console.log('Handling BookSearch query change...');
+    BooksAPI.search(this.state.query)
+      .then(books => {
+        this.setState((prevState) => ({
+          queryResults: (books && books.length > 0)
+            ? this.queryResultsUpdatedForCurrentBooksState(books)
+            : this.defaultQueryResult
+        }));
+      })
+      .catch(e => {
+        this.setState((prevState) => ({
+          queryResults: this.defaultQueryResult
+        }));
+      });
+  }
+
+  querySearch = debounce(this.doQuerySearch, 500)
+
   render() {
     return (
         <div className="search-books">
@@ -76,19 +96,7 @@ export class BookSearch extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     console.log('In BookSearch:componentDidUpdate');
     if (prevState.query !== this.state.query) {
-      console.log('Handling BookSearch query change...');
-      BooksAPI.search(this.state.query)
-        .then(books => {
-            this.setState((prevState)=>({
-              queryResults: (books && books.length > 0)
-                             ? this.queryResultsUpdatedForCurrentBooksState(books)
-                             : this.defaultQueryResult}));
-        })
-        .catch(e => {
-            this.setState((prevState)=>({
-              queryResults: this.defaultQueryResult
-          }));
-        });
+      this.querySearch();
     }
   }
 }
