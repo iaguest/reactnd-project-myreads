@@ -13,11 +13,11 @@ export class BookCase extends React.Component {
         <div className="list-books-content">
           <div>
             { shelfTypes().map((shelfType) => {
-              return <BookShelf
-                        key={shelfType}
-                        name={ shelfTypeLabel(shelfType) }
-                        books={ this.props.books.filter((book) => book.shelf === shelfType) }
-                        onChangeShelf = { this.props.onChangeShelf } />;
+                return <BookShelf
+                          key={shelfType}
+                          name={ shelfTypeLabel(shelfType) }
+                          books={ this.props.books.filter((book) => book.shelf === shelfType) }
+                          onChangeShelf = { this.props.onChangeShelf } />;
             })}
           </div>
         </div>
