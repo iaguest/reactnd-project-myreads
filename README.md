@@ -12,3 +12,11 @@ To test the application:
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
+
+## Screenshots
+
+### Bookshelf
+![Alt text](screenshots/bookshelf.png?raw=true "Image 1")
+
+### Search
+![Alt text](screenshots/search.png?raw=true "Image 1")
